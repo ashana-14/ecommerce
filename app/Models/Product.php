@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Helpers\ProductCollectionHelper;
+use Illuminate\Contracts\Database\Eloquent\Builder as EloquentBuilder;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Collection;
@@ -33,13 +34,44 @@ class Product extends Model
      *  =============== SCOPES  ===============
      */
 
+    public function scopeWithPrices(Builder $query, array $group_ids = [1])
+    {
+        $query->where('products.id', '>', 0);
+    }
+
+    public function scopeSingleProduct(Builder $query, int $id)
+    {
+        $query->where('products.id', $id);
+    }
 
     /**
      *  =============== FUNCTIONS  ===============
      */
 
+    public function getImage()
+    {
+        return asset('storage' . $this->image_path . $this->image_name);
+    }
+
+    public function getPrice()
+    {
+        return $this->price;
+    }
+
+    public function getStockPrice()
+    {
+        return $this->price;
+    }
 
 
+    public function getCartQuantityPrice()
+    {
+        return $this->getPrice() * $this->pivot->quantity;
+    }
 
 
+    public function getLink()
+    {
+        return route('shop.details', ['id' => $this->id]);
+    }
 }
