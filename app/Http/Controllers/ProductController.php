@@ -7,16 +7,18 @@ use Illuminate\Support\Facades\Auth;
 
 class ProductController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+
+
     public function index()
     {
+        // check if the user is authenticated and which group the user belongs to
         $group_ids = Auth::check() ? Auth::user()->getGroups() : [1];
 
+        // get all products from the product table. Store the information in a variable named product_data
         $product_data = Product::withPrices()->get();
 
-        return view('pages.testing.productspage', compact('product_data'));
+        // pass the information to the page named productspage
+        return view('pages.default.productspage', compact('product_data'));
 
     }
 }
