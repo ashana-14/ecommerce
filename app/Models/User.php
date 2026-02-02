@@ -75,7 +75,9 @@ class User extends Authenticatable
 
     public function getGroups(): array
     {
-        return [];
+       $groups_ids = [1];
+
+       return $groups_ids;
     }
 
 
