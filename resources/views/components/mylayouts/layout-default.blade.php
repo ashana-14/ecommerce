@@ -141,7 +141,7 @@
     @endisset
 
 
-
+    <x-core.alert />
     {{ $slot }}
 
     {{-- START footer --}}
