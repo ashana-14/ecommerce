@@ -3,10 +3,12 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable
 {
@@ -64,6 +66,22 @@ class User extends Authenticatable
             ->withTimestamps();
     }
 
+     /**
+     * The tier the user belongs to.
+     */
+    public function tier(): BelongsTo
+    {
+        return $this->belongsTo(Tier::class, 'tier_id');
+    }
+
+    /**
+     * Get all of the orders for the User.
+     */
+    public function orders(): HasMany
+    {
+        return $this->hasMany(Order::class);
+    }
+
     /**
      *  =============== SCOPES  ===============
      */
@@ -75,9 +93,10 @@ class User extends Authenticatable
 
     public function getGroups(): array
     {
-       $groups_ids = [1];
+       //$groups_ids = [1];
+       $group_ids = [$this->tier->id];
 
-       return $groups_ids;
+       return $group_ids;
     }
 
 

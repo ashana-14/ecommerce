@@ -22,6 +22,7 @@ class UserSeeder extends Seeder
                 'password' => Hash::make('Password1'),
                 'created_at' => Carbon::now(),
                 'updated_at' => null,
+                'tier_id' => 1
             ],
             [
                 'name' => 'Jane Doe',
@@ -30,6 +31,7 @@ class UserSeeder extends Seeder
                 'email_verified_at' => Carbon::now(),
                 'created_at' => Carbon::now(),
                 'updated_at' => null,
+                'tier_id' => 1
             ],
         ]);
     }
